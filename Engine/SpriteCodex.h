@@ -9,7 +9,7 @@ public:
 	// width and height of all tiles
 	static constexpr int tileSize = 16;
 	// base color for all tiles
-	static constexpr Color baseColor = Colors::Blue;
+	static constexpr Color baseColor = Colors::Black;
 	// 16x16 tile sprites assume (192,192,192) background and top left origin
 	static void DrawTile0( const Vei2& pos,Graphics& gfx );
 	static void DrawTile1( const Vei2& pos,Graphics& gfx );
@@ -30,11 +30,17 @@ public:
 	static constexpr int artsize = 28;
 
 	static void DrawLeia(const Vei2& pos, Graphics& gfx);
+	static void DrawLeiaAlert(const Vei2& pos, Graphics& gfx);
 	static void DrawYoda(const Vei2& pos, Graphics& gfx);
+	static void DrawYodaAlert(const Vei2& pos, Graphics& gfx);
 	static void DrawObiwan(const Vei2& pos, Graphics& gfx);
+	static void DrawObiwanAlert(const Vei2& pos, Graphics& gfx);
 	static void DrawR2d2(const Vei2& pos, Graphics& gfx);
+	static void DrawR2d2Alert(const Vei2& pos, Graphics& gfx);
 	static void DrawProbedroid(const Vei2& pos, Graphics& gfx);
+	static void DrawProbedroidRed(const Vei2& pos, Graphics& gfx);
 	static void DrawTileTerminalButton(const Vei2& pos, Graphics& gfx);
+	
 
 
 	//Tile selector function valid input 0-8

@@ -5,12 +5,20 @@
 #include "RectI.h"
 #include <assert.h>
 #include <random>
+#include <algorithm>
 class JediField
 {
+public:
+	enum class State
+	{
+		IsDetected,
+		Winner,
+		Probing
+	};
 private:
 	class Tile
 	{
-		enum State
+		enum class State
 		{
 			HIDDEN,
 			REVEALED,
@@ -20,23 +28,38 @@ private:
 		bool HasJedi() const;
 		void SpawnJedi();
 		bool isRevealed() const;
-		void Revealed();
+		void Reveal();
 		bool hasProbe() const;
-		void LaunchedProbe();
-		void Draw(const Vei2& pos, Graphics& gfx) const;
+		void Probed();
+		void Draw(const Vei2& pos,JediField::State stage, Graphics& gfx) const;
+		void DroidScanresults(int scancount);
 	private:
 		State state = State::HIDDEN;
 		bool hasjedi = false;
+		int DroidSensorNumber = -1;
 	};
 public:
-	RectI GetRect() const;
-	JediField(int nJedi);
-	Tile& TileAt(const Vei2& gridpos);
-	const Tile& TileAt(const Vei2 gridpos) const;
 	void Draw(Graphics& gfx) const;
+	RectI GetRect() const;
+	JediField(const Vei2 center, int nJedi);
+	void OnRevealClick(const Vei2& screenPos);
+	void OnProbeClick(const Vei2& screenPos);
+	State GetState() const;
 private:
-	static constexpr int width = 20;
-	static constexpr int height = 16;
+	Tile& TileAt(const Vei2& gridpos);
+	Vei2 ScreenToGrid(const Vei2& ScreenPos);
+	const Tile& TileAt(const Vei2 gridpos) const;
+	int DroidScanCount(const Vei2& gridpos);
+	bool JediFound() const;
+private:
+	bool IsDetected = false; 
+	static constexpr int width = 4;
+	static constexpr int height = 3;
+	static constexpr int borderThickness = 10;
+	static constexpr Color borderColor = Colors::Blue;
+	Vei2 topLeft;
+	State jstate = State::Probing;
 	Tile Jfield[width * height];
+	
 };
 

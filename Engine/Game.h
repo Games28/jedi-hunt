@@ -25,9 +25,18 @@
 #include "Graphics.h"
 #include "Background.h"
 #include "JediField.h"
+#include "TheMenu.h"
+#include "Vei2.h"
 
 class Game
 {
+public:
+    enum class GameState
+    {
+        MENU,
+        GAMEPLAY,
+        END
+    };
 public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
@@ -44,6 +53,8 @@ private:
 	Graphics gfx;
     Background back;
     JediField jfield;
+    TheMenu menu;
+    GameState gstate = GameState::MENU;
 	/********************************/
 	/*  User Variables              */
 	/********************************/

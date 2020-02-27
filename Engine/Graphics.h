@@ -72,6 +72,7 @@ public:
 	void DrawBox(Vei2& loc, Vei2& size, Color c);
 	void DrawX(Vei2& loc, int width, Color c);
 	void DrawY(Vei2& loc, int height, Color c);
+	RectI GetRect() const;
 	
 	//Character Art
 	

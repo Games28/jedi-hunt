@@ -72,6 +72,30 @@
     <ClInclude Include="JediField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TatooineArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoruscantArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DagobahArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TheMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuArt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -114,6 +138,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JediField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TatooineArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoruscantArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DagobahArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TheMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuArt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

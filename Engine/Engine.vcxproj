@@ -140,35 +140,51 @@
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="CoruscantArt.h" />
+    <ClInclude Include="DagobahArt.h" />
     <ClInclude Include="DXErr.h" />
+    <ClInclude Include="EndingArt.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="JediField.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="MenuArt.h" />
+    <ClInclude Include="TheMenu.h" />
+    <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="RectI.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ShipArt.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="SpriteCodex.h" />
     <ClInclude Include="Stars.h" />
+    <ClInclude Include="TatooineArt.h" />
     <ClInclude Include="Vei2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="CoruscantArt.cpp" />
+    <ClCompile Include="DagobahArt.cpp" />
     <ClCompile Include="DXErr.cpp" />
+    <ClCompile Include="EndingArt.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="JediField.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MenuArt.cpp" />
+    <ClCompile Include="TheMenu.cpp" />
+    <ClCompile Include="MenuSelector.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RectI.cpp" />
+    <ClCompile Include="ShipArt.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpriteCodex.cpp" />
     <ClCompile Include="Stars.cpp" />
+    <ClCompile Include="TatooineArt.cpp" />
     <ClCompile Include="Vei2.cpp" />
   </ItemGroup>
   <ItemGroup>

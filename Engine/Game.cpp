@@ -25,8 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-    back(gfx),
-    jfield(20)
+    jfield(gfx.GetRect().GetCenter(),1)
 {
 }
 
@@ -36,15 +35,99 @@ void Game::Go()
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
+    
 }
 
 void Game::UpdateModel()
 {
-
+    switch (gstate)
+    {
+    case GameState::MENU:
+    {
+        menu.ButtonSelect( wnd.kbd);
+        if (wnd.kbd.KeyIsPressed(VK_RETURN))
+        {
+            gstate = GameState::GAMEPLAY;
+        }
+        break;
+    }
+    case GameState::GAMEPLAY:
+    {
+        while (!wnd.mouse.IsEmpty())
+        {
+            const auto e = wnd.mouse.Read();
+            if (jfield.GetState() == JediField::State::Probing)
+            {
+                if (e.GetType() == Mouse::Event::Type::LPress)
+                {
+                    const Vei2 mousePos = wnd.mouse.GetPos();
+                    if (jfield.GetRect().Contains(mousePos))
+                    {
+                        jfield.OnRevealClick(mousePos);
+                    }
+                }
+                else if (e.GetType() == Mouse::Event::Type::RPress)
+                {
+                    const Vei2 mousePos = wnd.mouse.GetPos();
+                    if (jfield.GetRect().Contains(mousePos))
+                    {
+                        jfield.OnProbeClick(mousePos);
+                    }
+                }
+            }
+        }
+        if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
+        {
+            gstate = GameState::END;
+        }
+        
+        break;
+    }
+    case GameState::END:
+    {
+        if (wnd.kbd.KeyIsPressed(VK_BACK))
+        {
+            gstate = GameState::MENU;
+        }
+        break;
+    }
+    }
+    
+   
+    
 }
 
 void Game::ComposeFrame()
 {
-    back.Draw(gfx);
-    jfield.Draw(gfx);
+    switch (gstate)
+    {
+    case GameState::MENU:
+    {
+        back.Themenu(gfx);
+        menu.nDraw(gfx);
+
+
+        break;
+    }
+    case GameState::GAMEPLAY:
+    {
+        jfield.Draw(gfx);
+        break;
+    }
+    case GameState::END:
+    {
+        if (jfield.GetState() == JediField::State::Winner)
+        {
+            back.EndWon(gfx);
+        }
+        if (jfield.GetState() == JediField::State::IsDetected)
+        {
+            back.EndFailure(gfx);
+        }
+        break;
+    }
+    }
+    
+    
+    
 }

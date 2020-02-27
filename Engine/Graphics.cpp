@@ -26280,6 +26280,10 @@ void Graphics::DrawY(Vei2& loc, int height, Color c)
 		PutPixel(loc.x , loc.y + i, c);
 	}
 }
+RectI Graphics::GetRect() const
+{
+	return RectI(0,ScreenWidth,0,ScreenHeight);
+}
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
