@@ -1,5 +1,117 @@
 #include "JediField.h"
-#include "Tile.h"
+#undef min
+#undef max
+
+bool JediField::Tile::HasJedi() const
+{
+	return hasjedi;
+}
+
+void JediField::Tile::SpawnJedi()
+{
+	assert(!hasjedi);
+	hasjedi = true;
+}
+
+bool JediField::Tile::isRevealed() const
+{
+	return state == State::REVEALED;
+}
+
+void JediField::Tile::Reveal()
+{
+	assert(state == State::HIDDEN);
+	state = State::REVEALED;
+}
+
+bool JediField::Tile::hasProbe() const
+{
+	
+	return state == State::PROBE;
+}
+
+void JediField::Tile::Probed()
+{
+	assert(!isRevealed());
+	if (state == State::HIDDEN)
+	{
+		state = State::PROBE;
+	}
+	else
+	{
+		state = State::HIDDEN;
+	}
+}
+
+void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gfx) const
+{
+	if (stage != JediField::State::IsDetected)
+	{
+		switch (state)
+		{
+		case State::HIDDEN:
+			SpriteCodex::DrawTileTerminalButton(pos, gfx);
+			break;
+		case State::REVEALED:
+			if (!hasjedi)
+			{
+				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
+			}
+			else {
+				SpriteCodex::DrawR2d2(pos, gfx);
+			}
+			break;
+		case State::PROBE:
+			SpriteCodex::DrawProbedroid(pos, gfx);
+			break;
+		}
+	}
+	else
+	{
+		switch (state)
+		{
+		case State::HIDDEN:
+			if (hasjedi)
+			{
+				SpriteCodex::DrawR2d2(pos, gfx);
+			}
+			else {
+				SpriteCodex::DrawTileTerminalButton(pos, gfx);
+			}
+			break;
+		case State::REVEALED:
+			if (!hasjedi)
+			{
+				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
+				
+				
+			}
+			else {
+				SpriteCodex::DrawProbedroidRed(pos, gfx);
+			}
+			break;
+		case State::PROBE:
+			if (hasjedi)
+			{
+				SpriteCodex::DrawR2d2(pos, gfx);
+				SpriteCodex::DrawProbedroid(pos, gfx);
+
+			}
+			else {
+				SpriteCodex::DrawR2d2(pos, gfx);
+				SpriteCodex::DrawTileCross(pos, gfx);
+			}
+			break;
+		}
+
+	}
+}
+
+void JediField::Tile::DroidScanresults(int scancount)
+{
+	assert(DroidSensorNumber == -1);
+	DroidSensorNumber = scancount;
+}
 
 RectI JediField::GetRect() const
 {
@@ -24,9 +136,7 @@ JediField::JediField(const Vei2 center,int nJedi)
 			spawnPos = Vei2(xdist(rng), ydist(rng));
 		} while (TileAt(spawnPos).HasJedi());
 		TileAt(spawnPos).SpawnJedi();
-		TileAt(spawnPos).Reveal();
 	}
-	
 	
 	for (Vei2 gridPos = { 0,0 }; gridPos.y < height; gridPos.y++)
 	{
@@ -37,7 +147,6 @@ JediField::JediField(const Vei2 center,int nJedi)
 	}
 	
 	
-
 }
 
 void JediField::OnRevealClick(const Vei2& screenPos)
@@ -136,7 +245,7 @@ const JediField::Tile& JediField::TileAt(const Vei2 gridpos) const
 	return Jfield[gridpos.y * width + gridpos.x];
 }
 
-void JediField::Draw(Graphics& gfx) 
+void JediField::Draw(Graphics& gfx) const
 {
 	gfx.DrawRect(GetRect().GetExpanded(borderThickness), borderColor);
 	gfx.DrawRect(GetRect(), SpriteCodex::baseColor);
