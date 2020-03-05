@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-    jfield(gfx.GetRect().GetCenter(),2)
+    jfield(gfx.GetRect().GetCenter(),1)
 {
 }
 
@@ -103,17 +103,14 @@ void Game::ComposeFrame()
     {
     case GameState::MENU:
     {
-       back.Themenu(gfx);
-      
-        menu.Draw(gfx);
+        back.Themenu(gfx);
+        menu.nDraw(gfx);
 
 
         break;
     }
     case GameState::GAMEPLAY:
     {
-       
-        menu.Drawbackground(gfx);
         jfield.Draw(gfx);
         break;
     }

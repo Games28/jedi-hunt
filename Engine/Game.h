@@ -27,7 +27,6 @@
 #include "JediField.h"
 #include "TheMenu.h"
 #include "Vei2.h"
-#include "selection.h"
 
 class Game
 {

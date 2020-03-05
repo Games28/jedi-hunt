@@ -128405,6 +128405,39 @@ void TheMenu::MenuSelection(Vei2& pos, Graphics& gfx)
 
 
 
+ 
+
+Vei2 TheMenu::ScreentoGrid(const Vei2& screenpos)
+{
+	return (screenpos - topLeft) / (ButtonWidth + ButtonHeight);
+}
+
+int& TheMenu::ButtonAt(const Vei2& Buttonpos)
+{
+	return Buttons[Buttonpos.y * Width + Buttonpos.x];
+}
+
+RectI TheMenu::GetRect(Vei2& topleft)
+ {
+	 return RectI(topLeft + topleft,topleft.x * ButtonWidth, topleft.y * ButtonHeight);
+ }
+
+ void TheMenu::nDraw(Graphics& gfx)
+ {
+	 int count = 0;
+	 for (Vei2 ButtonPos = { 0,0 }; ButtonPos.y < Height; ++ButtonPos.y)
+	 {
+
+		 for (ButtonPos.x = 0; ButtonPos.x < Width; ++ButtonPos.x)
+		 {
+			 Vei2 sButtons = ButtonPos + offset;
+			 count++;
+			 gfx.DrawRect(GetRect(sButtons),C);
+		 }
+	 }
+
+	 MenuSelection(Vei2{ 140,120 }, gfx);
+ }
 
  void TheMenu::ButtonSelect( Keyboard& kbd)
  {
@@ -128412,21 +128445,21 @@ void TheMenu::MenuSelection(Vei2& pos, Graphics& gfx)
 	 if (kbd.KeyIsPressed('L'))
 	 {
 
-		 if (kbd.KeyIsPressed('2'))
+		 if (kbd.KeyIsPressed('1'))
 		 {
-			 level = Levels::DAGO;
+			 Levs = Levels::DAGO;
+		 }
+		 else if (kbd.KeyIsPressed('2'))
+		 {
+			 Levs = Levels::SHIP;
 		 }
 		 else if (kbd.KeyIsPressed('3'))
 		 {
-			 level = Levels::SHIP;
-		 }
-		 else if (kbd.KeyIsPressed('1'))
-		 {
-			 level = Levels::TATO;
+			 Levs = Levels::TATO;
 		 }
 		 else if (kbd.KeyIsPressed('4'))
 		 {
-			level = Levels::TEMPLE;
+			 Levs = Levels::TEMPLE;
 		 }
 
 	 }
@@ -128434,21 +128467,21 @@ void TheMenu::MenuSelection(Vei2& pos, Graphics& gfx)
 	 
 	 if (kbd.KeyIsPressed('C'))
 	 {
-		 if (kbd.KeyIsPressed('3'))
+		 if (kbd.KeyIsPressed('1'))
 		 {
-			 character = Characters::LEIA;
+			 Chars = Characters::LEIA;
 		 }
 		 else if (kbd.KeyIsPressed('2'))
 		 {
-			 character = Characters::OBIWAN;
+			 Chars = Characters::OBIWAN;
+		 }
+		 else if (kbd.KeyIsPressed('3'))
+		 {
+			 Chars = Characters::R2D2;
 		 }
 		 else if (kbd.KeyIsPressed('4'))
 		 {
-			character = Characters::R2D2;
-		 }
-		 else if (kbd.KeyIsPressed('1'))
-		 {
-			 character = Characters::YODA;
+			 Chars = Characters::YODA;
 		 }
 		
 
@@ -128461,15 +128494,15 @@ void TheMenu::MenuSelection(Vei2& pos, Graphics& gfx)
 		 
 		 if (kbd.KeyIsPressed('1'))
 		 {
-			 difficulty = Difficulty::EASY;
+			 Diff = Difficulty::EASY;
 		 }
 		 else if (kbd.KeyIsPressed('2'))
 		 {
-			 difficulty = Difficulty::MEDIUM;
+			 Diff = Difficulty::MEDIUM;
 		 }
 		 else if (kbd.KeyIsPressed('3'))
 		 {
-			 difficulty = Difficulty::HARD;
+			 Diff = Difficulty::HARD;
 		 }
 		 
 		 
@@ -128478,123 +128511,34 @@ void TheMenu::MenuSelection(Vei2& pos, Graphics& gfx)
 
  void TheMenu::Draw(Graphics& gfx)
  {
-	 MenuSelection(Vei2{ 140,130 }, gfx);
 	 Vei2 pos{ 150,200 };
 	 Vei2 pos1{ 200,200 };
 	 Vei2 pos2{ 250,200 };
-	 switch (character)
+	 switch (Chars)
 	 {
-	 case Characters::YODA:
-		 saber.BlueSaber(Vei2{165,190}, gfx);
-		 break;
-	 case Characters::OBIWAN:
-		 saber.BlueSaber(Vei2{ 165,225 }, gfx);
-		 break;
 	 case Characters::LEIA:
-		 saber.BlueSaber(Vei2{ 165,260 }, gfx);
-		 break;
-	 case Characters::R2D2:
-		 saber.BlueSaber(Vei2{ 165,300 }, gfx);
+		 saber.BlueSaber(Vei2{150,200}, gfx);
 		 break;
 	 default:
 		 break;
 	 }
 
-	switch (level)
-	{
-	 case Levels::SHIP:
-		 saber.GreenSaber(Vei2{320,270}, gfx);
-	    break;
-	 case Levels::DAGO:
-		 saber.GreenSaber(Vei2{ 320,225 }, gfx);
-		 break;
-	 case Levels::TATO:
-		 saber.GreenSaber(Vei2{ 320,190 }, gfx);
-		 break;
-	 case Levels::TEMPLE:
-		 saber.GreenSaber(Vei2{ 320,310 }, gfx);
-		 break;
-	 default:
-		 break;
-	 }
-	 
-	// switch (Diff)
-	// {
-	// case Difficulty::EASY:
-	//	 saber.PurpleSaber(pos2, gfx);
-	// default:
+	 //switch (Levs)
+	 //{
+	 //case Levels::SHIP:
+	//	 saber.GreenSaber(pos1, gfx);
 	//	 break;
-	// }
- }
-
- void TheMenu::Drawbackground(Graphics& gfx)
- {
-	 if (level == Levels::SHIP)
-	 {
-		 back.TheShip(gfx);
-	 }
-	 else if (level == Levels::DAGO)
-	 {
-		 back.YodaHut(gfx);
-
-	 }
-	 else if (level == Levels::TATO)
-	 {
-		 back.ObiWanHut(gfx);
-	 }
-	 else if (level == Levels::TEMPLE)
-	 {
-		 back.JediTemple(gfx);
-	 }
-	// else if (level == Levels::default)
-	 {
-		 back.YodaHut(gfx);
-	 }
-	 
- }
-
- void TheMenu::DrawCharacters(const Vei2& pos, Graphics& gfx)
- {
-
-	 if (character == Characters::LEIA)
-	 {
-		 Chars.DrawLeia(pos, gfx);
-	 }
-	 if (character == Characters::OBIWAN)
-	 {
-		 Chars.DrawObiwan(pos, gfx);
-	 }
-	 if (character == Characters::R2D2)
-	 {
-		 Chars.DrawR2d2(pos, gfx);
-	 }
-	 if (character == Characters::YODA)
-	 {
-		 Chars.DrawYoda(pos, gfx);
-	 }
-	 
- }
-
- void TheMenu::DrawAlertCharacters(const Vei2& pos, Graphics& gfx)
- {
-	 if (character == Characters::LEIA)
-	 {
-		 Chars.DrawLeiaAlert(pos, gfx);
-	 }
-	 if (character == Characters::OBIWAN)
-	 {
-		 Chars.DrawObiwanAlert(pos, gfx);
-	 }
-	  if (character == Characters::R2D2)
-	 {
-		 Chars.DrawR2d2Alert(pos, gfx);
-
-	 }
-	 if (character == Characters::YODA)
-	 {
-		 Chars.DrawYodaAlert(pos, gfx);
-	 }
-	
+	 //default:
+	//	 break;
+	 //}
+	 //
+	 //switch (Diff)
+	 //{
+	 //case Difficulty::EASY:
+	//	 saber.PurpleSaber(pos2, gfx);
+	 //default:
+	//	 break;
+	 //}
  }
 
  

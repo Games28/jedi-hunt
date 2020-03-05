@@ -1,8 +1,8 @@
 #pragma once
-
 #include "Graphics.h"
 #include "Vei2.h"
 #include "Stars.h"
+#include "TheMenu.h"
 #include "CoruscantArt.h"
 #include "ShipArt.h"
 #include "DagobahArt.h"
@@ -11,7 +11,6 @@
 #include "Colors.h"
 #include "EndingArt.h"
 #include "MenuArt.h"
-#include "Selection.h"
 #include <random>
 
 class Background
@@ -25,12 +24,9 @@ public:
 	void ObiWanHut(Graphics& gfx);
 	void EndWon(Graphics& gfx);
 	void EndFailure(Graphics& gfx);
-	
 
 private:
-	Selection select;
-	
-	MenuArt menuart;
+	MenuArt menu;
 	CoruscantArt coruscant;
 	ShipArt ship;
 	DagobahArt dagobah;
