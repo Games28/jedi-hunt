@@ -43,7 +43,7 @@ void JediField::Tile::Probed()
 	}
 }
 
-void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gfx) const
+void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gfx) 
 {
 	if (stage != JediField::State::IsDetected)
 	{
@@ -57,8 +57,10 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 			{
 				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
 			}
-			else {
-				SpriteCodex::DrawR2d2(pos, gfx);
+			else
+			{
+				Jmenu.DrawCharacters(pos, gfx);
+			
 			}
 			break;
 		case State::PROBE:
@@ -73,7 +75,7 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 		case State::HIDDEN:
 			if (hasjedi)
 			{
-				SpriteCodex::DrawR2d2(pos, gfx);
+				Jmenu.DrawCharacters(pos, gfx);
 			}
 			else {
 				SpriteCodex::DrawTileTerminalButton(pos, gfx);
@@ -93,13 +95,12 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 		case State::PROBE:
 			if (hasjedi)
 			{
-				SpriteCodex::DrawR2d2(pos, gfx);
+				//SpriteCodex::DrawR2d2(pos, gfx);
 				SpriteCodex::DrawProbedroid(pos, gfx);
 
 			}
 			else {
-				SpriteCodex::DrawR2d2(pos, gfx);
-				SpriteCodex::DrawTileCross(pos, gfx);
+				Jmenu.DrawAlertCharacters(pos, gfx);
 			}
 			break;
 		}
@@ -136,7 +137,9 @@ JediField::JediField(const Vei2 center,int nJedi)
 			spawnPos = Vei2(xdist(rng), ydist(rng));
 		} while (TileAt(spawnPos).HasJedi());
 		TileAt(spawnPos).SpawnJedi();
+		TileAt(spawnPos).Reveal();
 	}
+	
 	
 	for (Vei2 gridPos = { 0,0 }; gridPos.y < height; gridPos.y++)
 	{
@@ -147,6 +150,7 @@ JediField::JediField(const Vei2 center,int nJedi)
 	}
 	
 	
+
 }
 
 void JediField::OnRevealClick(const Vei2& screenPos)
@@ -245,7 +249,7 @@ const JediField::Tile& JediField::TileAt(const Vei2 gridpos) const
 	return Jfield[gridpos.y * width + gridpos.x];
 }
 
-void JediField::Draw(Graphics& gfx) const
+void JediField::Draw(Graphics& gfx) 
 {
 	gfx.DrawRect(GetRect().GetExpanded(borderThickness), borderColor);
 	gfx.DrawRect(GetRect(), SpriteCodex::baseColor);

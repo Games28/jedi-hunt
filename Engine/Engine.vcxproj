@@ -150,6 +150,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MenuArt.h" />
+    <ClInclude Include="Selection.h" />
     <ClInclude Include="TheMenu.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="Mouse.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="SpriteCodex.h" />
     <ClInclude Include="Stars.h" />
     <ClInclude Include="TatooineArt.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Vei2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +187,7 @@
     <ClCompile Include="SpriteCodex.cpp" />
     <ClCompile Include="Stars.cpp" />
     <ClCompile Include="TatooineArt.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Vei2.cpp" />
   </ItemGroup>
   <ItemGroup>
