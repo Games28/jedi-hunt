@@ -1,5 +1,5 @@
 #include "Tile.h"
-#include <assert.h>
+#include "JediField.h"
 
 #undef min
 #undef max
@@ -17,44 +17,44 @@ void Tile::SpawnJedi()
 
 bool Tile::isRevealed() const
 {
-	return state == State::REVEALED;
+	return state == Stage::REVEALED;
 }
 
 void Tile::Reveal()
 {
-	assert(state == State::HIDDEN);
-	state = State::REVEALED;
+	assert(state == Stage::HIDDEN);
+	state = Stage::REVEALED;
 }
 
 bool Tile::hasProbe() const
 {
 
-	return state == State::PROBE;
+	return state == Stage::PROBE;
 }
 
 void Tile::Probed()
 {
 	assert(!isRevealed());
-	if (state == State::HIDDEN)
+	if (state == Stage::HIDDEN)
 	{
-		state = State::PROBE;
+		state = Stage::PROBE;
 	}
 	else
 	{
-		state = State::HIDDEN;
+		state = Stage::HIDDEN;
 	}
 }
 
-void Tile::Draw(const Vei2& pos, State stage, Graphics& gfx)
+void Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gfx)
 {
-	if (stage != State::IsDetected)
+	if (stage != JediField::State::IsDetected)
 	{
 		switch (state)
 		{
-		case State::HIDDEN:
+		case Stage::HIDDEN:
 			SpriteCodex::DrawTileTerminalButton(pos, gfx);
 			break;
-		case State::REVEALED:
+		case Stage::REVEALED:
 			if (!hasjedi)
 			{
 				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
@@ -65,7 +65,7 @@ void Tile::Draw(const Vei2& pos, State stage, Graphics& gfx)
 
 			}
 			break;
-		case State::PROBE:
+		case Stage::PROBE:
 			SpriteCodex::DrawProbedroid(pos, gfx);
 			break;
 		}
@@ -74,7 +74,7 @@ void Tile::Draw(const Vei2& pos, State stage, Graphics& gfx)
 	{
 		switch (state)
 		{
-		case State::HIDDEN:
+		case Stage::HIDDEN:
 			if (hasjedi)
 			{
 				Jmenu.DrawCharacters(pos, gfx);
@@ -83,7 +83,7 @@ void Tile::Draw(const Vei2& pos, State stage, Graphics& gfx)
 				SpriteCodex::DrawTileTerminalButton(pos, gfx);
 			}
 			break;
-		case State::REVEALED:
+		case Stage::REVEALED:
 			if (!hasjedi)
 			{
 				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
@@ -94,7 +94,7 @@ void Tile::Draw(const Vei2& pos, State stage, Graphics& gfx)
 				SpriteCodex::DrawProbedroidRed(pos, gfx);
 			}
 			break;
-		case State::PROBE:
+		case Stage::PROBE:
 			if (hasjedi)
 			{
 				//SpriteCodex::DrawR2d2(pos, gfx);

@@ -1,4 +1,5 @@
-#pragma once
+#pragma 
+class Tile;
 #include "Vei2.h"
 #include "Graphics.h"
 #include "SpriteCodex.h"
@@ -6,6 +7,7 @@
 #include "TheMenu.h"
 #include <assert.h>
 #include <random>
+
 #include <algorithm>
 class JediField
 {
@@ -17,30 +19,7 @@ public:
 		Probing
 	};
 private:
-	class Tile
-	{
-		enum class State
-		{
-			HIDDEN,
-			REVEALED,
-			PROBE
-		};
-	public:
-		bool HasJedi() const;
-		void SpawnJedi();
-		bool isRevealed() const;
-		void Reveal();
-		bool hasProbe() const;
-		void Probed();
-		void Draw(const Vei2& pos,JediField::State stage, Graphics& gfx);
-		void DroidScanresults(int scancount);
-		TheMenu Jmenu;
-	private:
-		State state = State::HIDDEN;
-		
-		bool hasjedi = false;
-		int DroidSensorNumber = -1;
-	};
+	
 public:
 	void Draw(Graphics& gfx);
 	RectI GetRect() const;

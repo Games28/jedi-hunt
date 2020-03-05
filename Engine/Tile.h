@@ -1,10 +1,14 @@
 #pragma once
 #include "TheMenu.h"
+#include <assert.h>
+class JediField;
 
 class Tile
 {
+public:
 	
-		enum class State
+public:
+		enum class Stage
 		{
 			HIDDEN,
 			REVEALED,
@@ -21,7 +25,7 @@ class Tile
 		void DroidScanresults(int scancount);
 		TheMenu Jmenu;
 	private:
-		State state = State::HIDDEN;
+		Stage state = Stage::HIDDEN;
 
 		bool hasjedi = false;
 		int DroidSensorNumber = -1;
