@@ -1,4 +1,5 @@
 #include "JediField.h"
+#include "Game.h"
 #undef min
 #undef max
 
@@ -50,7 +51,7 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 		switch (state)
 		{
 		case State::HIDDEN:
-			SpriteCodex::DrawTileTerminalButton(pos, gfx);
+			Characters::DrawTileTerminalButton(pos, gfx);
 			break;
 		case State::REVEALED:
 			if (!hasjedi)
@@ -58,11 +59,12 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
 			}
 			else {
-				SpriteCodex::DrawR2d2(pos, gfx);
+				Characters::DrawR2d2(pos, gfx);
+				
 			}
 			break;
 		case State::PROBE:
-			SpriteCodex::DrawProbedroid(pos, gfx);
+			Characters::DrawProbedroid(pos, gfx);
 			break;
 		}
 	}
@@ -73,10 +75,10 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 		case State::HIDDEN:
 			if (hasjedi)
 			{
-				SpriteCodex::DrawR2d2(pos, gfx);
+				Characters::DrawR2d2(pos, gfx);
 			}
 			else {
-				SpriteCodex::DrawTileTerminalButton(pos, gfx);
+				Characters::DrawTileTerminalButton(pos, gfx);
 			}
 			break;
 		case State::REVEALED:
@@ -87,18 +89,18 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 				
 			}
 			else {
-				SpriteCodex::DrawProbedroidRed(pos, gfx);
+				Characters::DrawProbedroidRed(pos, gfx);
 			}
 			break;
 		case State::PROBE:
 			if (hasjedi)
 			{
-				SpriteCodex::DrawR2d2(pos, gfx);
-				SpriteCodex::DrawProbedroid(pos, gfx);
+				Characters::DrawR2d2(pos, gfx);
+				Characters::DrawProbedroid(pos, gfx);
 
 			}
 			else {
-				SpriteCodex::DrawR2d2(pos, gfx);
+				Characters::DrawR2d2(pos, gfx);
 				SpriteCodex::DrawTileCross(pos, gfx);
 			}
 			break;
@@ -127,6 +129,8 @@ JediField::JediField(const Vei2 center,int nJedi)
 	std::mt19937 rng(rd());
 	std::uniform_int_distribution<int> xdist(0, width - 1);
 	std::uniform_int_distribution<int> ydist(0, height - 1);
+	
+
 
 	for (int nSpawned = 0; nSpawned < nJedi; ++nSpawned)
 	{
@@ -136,6 +140,7 @@ JediField::JediField(const Vei2 center,int nJedi)
 			spawnPos = Vei2(xdist(rng), ydist(rng));
 		} while (TileAt(spawnPos).HasJedi());
 		TileAt(spawnPos).SpawnJedi();
+		TileAt(spawnPos).Reveal();
 	}
 	
 	for (Vei2 gridPos = { 0,0 }; gridPos.y < height; gridPos.y++)
@@ -147,6 +152,54 @@ JediField::JediField(const Vei2 center,int nJedi)
 	}
 	
 	
+}
+
+void JediField::keySelection(Keyboard& kbd)
+{
+	//char C = kbd.ReadChar();
+	if (kbd.KeyIsPressed('C'))
+	{
+		if (kbd.KeyIsPressed('1'))
+		{
+			CharacterOpt = Characters::characterOptions::YODA;
+		}
+		else if (kbd.KeyIsPressed('2'))
+		{
+			CharacterOpt = Characters::characterOptions::OBIWAN;
+		}
+		else if (kbd.KeyIsPressed('3'))
+		{
+			CharacterOpt = Characters::characterOptions::LEIA;
+		}
+		else if (kbd.KeyIsPressed('4'))
+		{
+			CharacterOpt = Characters::characterOptions::R2D2;
+		}
+	}
+}
+
+void JediField::DrawSaber(Graphics& gfx)
+{
+	
+		if (CharacterOpt == Characters::characterOptions::YODA)
+		{
+			character.BlueSaber(Vei2(200, 185), gfx);
+		}
+		else if (CharacterOpt == Characters::characterOptions::OBIWAN)
+		{
+			character.BlueSaber(Vei2(200, 220), gfx);
+		}
+		else if (CharacterOpt == Characters::characterOptions::LEIA)
+		{
+			character.BlueSaber(Vei2(200, 255), gfx);
+			
+		}
+		else if (CharacterOpt == Characters::characterOptions::R2D2)
+		{
+			character.BlueSaber(Vei2(200, 295), gfx);
+		}
+	
+
 }
 
 void JediField::OnRevealClick(const Vei2& screenPos)

@@ -22,6 +22,13 @@ public:
 	void Projection(int x, int y, Graphics& gfx);
 	void SaberColorChange();
 
+	//selection menu images
+	void MenuSelection(Vei2& pos, Graphics& gfx);
+	void GreenSaber(Vei2& pos, Graphics& gfx);
+
+
+
+
 private:
 	static constexpr int maxRegularStars = 20;
 	Stars Regularstars[maxRegularStars] = {};

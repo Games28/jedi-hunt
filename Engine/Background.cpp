@@ -69,3 +69,67 @@ void Background::EndFailure(Graphics& gfx)
 	Vei2 pos1 = { 400,100 };
 	end.TheFailure(pos1, gfx);
 }
+
+void Background::MenuSelect(Keyboard& kbd)
+{
+	if (kbd.KeyIsPressed('L'))
+	{
+		if (kbd.KeyIsPressed('1'))
+		{
+			level = Levels::TATO;
+		}
+		else if (kbd.KeyIsPressed('2'))
+		{
+			level = Levels::DAGO;
+		}
+		else if (kbd.KeyIsPressed('3'))
+		{
+			level = Levels::SHIP;
+		}
+		else if (kbd.KeyIsPressed('4'))
+		{
+			level = Levels::TEMPLE;
+		}
+	}
+}
+
+void Background::SaberDraw(Graphics& gfx)
+{
+	menu.MenuSelection(Vei2{ 140, 120 }, gfx);
+	if (level == Levels::TATO)
+	{
+		menu.GreenSaber(Vei2(320, 185), gfx);
+	}
+	else if (level == Levels::DAGO)
+	{
+		menu.GreenSaber(Vei2(320, 220), gfx);
+	}
+	else if (level == Levels::SHIP)
+	{
+		menu.GreenSaber(Vei2(320, 255), gfx);
+	}
+	else if (level == Levels::TEMPLE)
+	{
+		menu.GreenSaber(Vei2(320, 295), gfx);
+	}
+}
+
+void Background::DrawBackground(Graphics& gfx)
+{
+	if (level == Levels::TATO)
+	{
+		ObiWanHut(gfx);
+	}
+	else if (level == Levels::DAGO)
+	{
+		YodaHut(gfx);
+	}
+	else if (level == Levels::SHIP)
+	{
+		TheShip(gfx);
+	}
+	else if (level == Levels::TEMPLE)
+	{
+		JediTemple(gfx);
+	}
+}

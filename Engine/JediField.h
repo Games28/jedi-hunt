@@ -3,9 +3,12 @@
 #include "Graphics.h"
 #include "SpriteCodex.h"
 #include "RectI.h"
+#include "MenuOptions.h"
 #include <assert.h>
 #include <random>
 #include <algorithm>
+#include "Characters.h"
+#include "Keyboard.h"
 class JediField
 {
 public:
@@ -33,8 +36,10 @@ private:
 		void Probed();
 		void Draw(const Vei2& pos,JediField::State stage, Graphics& gfx) const;
 		void DroidScanresults(int scancount);
+		MenuOptions menu;
 	private:
 		State state = State::HIDDEN;
+		
 		bool hasjedi = false;
 		int DroidSensorNumber = -1;
 	};
@@ -42,6 +47,8 @@ public:
 	void Draw(Graphics& gfx) const;
 	RectI GetRect() const;
 	JediField(const Vei2 center, int nJedi);
+	void keySelection(Keyboard& kbd);
+	void DrawSaber(Graphics& gfx);
 	void OnRevealClick(const Vei2& screenPos);
 	void OnProbeClick(const Vei2& screenPos);
 	State GetState() const;
@@ -57,6 +64,8 @@ private:
 	static constexpr int height = 3;
 	static constexpr int borderThickness = 10;
 	static constexpr Color borderColor = Colors::Blue;
+	Characters::characterOptions CharacterOpt = Characters::characterOptions::DEFAULT;
+	Characters character;
 	Vei2 topLeft;
 	State jstate = State::Probing;
 	Tile Jfield[width * height];

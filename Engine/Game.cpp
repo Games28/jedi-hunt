@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-    jfield(gfx.GetRect().GetCenter(),1)
+    jfield(gfx.GetRect().GetCenter(),4)
 {
 }
 
@@ -44,7 +44,9 @@ void Game::UpdateModel()
     {
     case GameState::MENU:
     {
-        menu.ButtonSelect( wnd.kbd);
+        back.MenuSelect(wnd.kbd);
+        jfield.keySelection(wnd.kbd);
+       // menu.ButtonSelect( wnd.kbd);
         if (wnd.kbd.KeyIsPressed(VK_RETURN))
         {
             gstate = GameState::GAMEPLAY;
@@ -104,13 +106,16 @@ void Game::ComposeFrame()
     case GameState::MENU:
     {
         back.Themenu(gfx);
-        menu.nDraw(gfx);
+        back.SaberDraw(gfx);
+        jfield.DrawSaber(gfx);
+        //menu.Draw(gfx);
 
 
         break;
     }
     case GameState::GAMEPLAY:
     {
+        back.DrawBackground(gfx);
         jfield.Draw(gfx);
         break;
     }

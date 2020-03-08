@@ -136,7 +136,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArtBackground.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Characters.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
@@ -150,6 +152,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MenuArt.h" />
+    <ClInclude Include="MenuOptions.h" />
     <ClInclude Include="TheMenu.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="Mouse.h" />
@@ -164,7 +167,9 @@
     <ClInclude Include="Vei2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArtBackground.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Characters.cpp" />
     <ClCompile Include="CoruscantArt.cpp" />
     <ClCompile Include="DagobahArt.cpp" />
     <ClCompile Include="DXErr.cpp" />
@@ -176,6 +181,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MenuArt.cpp" />
+    <ClCompile Include="MenuOptions.cpp" />
     <ClCompile Include="TheMenu.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
     <ClCompile Include="Mouse.cpp" />
