@@ -30,6 +30,8 @@ public:
 	static void DrawTileTerminalButton(const Vei2& pos, Graphics& gfx);
 	//selection
 	characterOptions& currentState(characterOptions& State);
+	static void DrawCharacters(const Vei2& pos, Graphics& gfx, characterOptions& chopts);
+	static void DrawCharactersAlert(const Vei2& pos, Graphics& gfx, characterOptions& chopts);
 
 private:
 	//characterOptions charoptions = characterOptions::DEFAULT;

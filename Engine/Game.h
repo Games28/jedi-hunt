@@ -27,7 +27,7 @@
 #include "JediField.h"
 #include "TheMenu.h"
 #include "Vei2.h"
-
+#include "MenuOptions.h"
 class Game
 {
 public:
@@ -54,6 +54,7 @@ private:
     Background back;
     JediField jfield;
     TheMenu menu;
+    MenuOptions testmenu;
     GameState gstate = GameState::MENU;
 	/********************************/
 	/*  User Variables              */

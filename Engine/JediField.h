@@ -3,7 +3,7 @@
 #include "Graphics.h"
 #include "SpriteCodex.h"
 #include "RectI.h"
-#include "MenuOptions.h"
+//#include "MenuOptions.h"
 #include <assert.h>
 #include <random>
 #include <algorithm>
@@ -34,12 +34,14 @@ private:
 		void Reveal();
 		bool hasProbe() const;
 		void Probed();
-		void Draw(const Vei2& pos,JediField::State stage, Graphics& gfx) const;
+		void Draw(const Vei2& pos,JediField::State stage,Characters::characterOptions COptions , Graphics& gfx) const;
+		bool NotDroidLookingFor() const;
 		void DroidScanresults(int scancount);
-		MenuOptions menu;
+		
 	private:
 		State state = State::HIDDEN;
-		
+		Characters::characterOptions CharOpts = Characters::characterOptions::DEFAULT;
+		Characters jedichar;
 		bool hasjedi = false;
 		int DroidSensorNumber = -1;
 	};
@@ -51,8 +53,10 @@ public:
 	void DrawSaber(Graphics& gfx);
 	void OnRevealClick(const Vei2& screenPos);
 	void OnProbeClick(const Vei2& screenPos);
+	void reset();
 	State GetState() const;
 private:
+	void Reveallocation(const Vei2& gridpos);
 	Tile& TileAt(const Vei2& gridpos);
 	Vei2 ScreenToGrid(const Vei2& ScreenPos);
 	const Tile& TileAt(const Vei2 gridpos) const;
@@ -60,8 +64,8 @@ private:
 	bool JediFound() const;
 private:
 	bool IsDetected = false; 
-	static constexpr int width = 4;
-	static constexpr int height = 3;
+	static constexpr int width = 10;
+	static constexpr int height = 8;
 	static constexpr int borderThickness = 10;
 	static constexpr Color borderColor = Colors::Blue;
 	Characters::characterOptions CharacterOpt = Characters::characterOptions::DEFAULT;

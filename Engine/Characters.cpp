@@ -5060,6 +5060,46 @@ Characters::characterOptions& Characters::currentState(characterOptions& State)
 	return State;
 }
 
+void Characters::DrawCharacters(const Vei2& pos, Graphics& gfx, characterOptions& chopts)
+{
+	if (chopts == characterOptions::YODA)
+	{
+		DrawYoda(pos, gfx);
+	}
+	else if (chopts == characterOptions::OBIWAN)
+	{
+		DrawObiwan(pos, gfx);
+	}
+	else if (chopts == characterOptions::LEIA)
+	{
+		DrawLeia(pos, gfx);
+	}
+	else if (chopts == characterOptions::R2D2)
+	{
+		DrawR2d2(pos, gfx);
+	}
+}
+
+void Characters::DrawCharactersAlert(const Vei2& pos, Graphics& gfx, characterOptions& chopts)
+{
+	if (chopts == characterOptions::YODA)
+	{
+		DrawYodaAlert(pos, gfx);
+	}
+	else if (chopts == characterOptions::OBIWAN)
+	{
+		DrawObiwanAlert(pos, gfx);
+	}
+	else if (chopts == characterOptions::LEIA)
+	{
+		DrawLeiaAlert(pos, gfx);
+	}
+	else if (chopts == characterOptions::R2D2)
+	{
+		DrawR2d2Alert(pos, gfx);
+	}
+}
+
 
 void Characters::BlueSaber(Vei2& pos, Graphics& gfx)
 {

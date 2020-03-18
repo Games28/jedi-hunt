@@ -154,7 +154,6 @@
     <ClInclude Include="MenuArt.h" />
     <ClInclude Include="MenuOptions.h" />
     <ClInclude Include="TheMenu.h" />
-    <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="RectI.h" />
     <ClInclude Include="Resource.h" />
@@ -183,7 +182,6 @@
     <ClCompile Include="MenuArt.cpp" />
     <ClCompile Include="MenuOptions.cpp" />
     <ClCompile Include="TheMenu.cpp" />
-    <ClCompile Include="MenuSelector.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RectI.cpp" />
     <ClCompile Include="ShipArt.cpp" />

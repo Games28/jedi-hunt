@@ -21,6 +21,7 @@ public:
 	void Projector(int x, int y, Graphics& gfx);
 	void Projection(int x, int y, Graphics& gfx);
 	void SaberColorChange();
+	void ProjectionColorChange();
 
 	//selection menu images
 	void MenuSelection(Vei2& pos, Graphics& gfx);
@@ -39,6 +40,7 @@ private:
 	static constexpr int height = 4;
 	static constexpr int ChairH = 50;
 	Color c = Colors::White;
+	Color PColor = {127,127,127};
 	Color R = { 127,0,0 };
 	int BR = 255;
 	int DR = 128;

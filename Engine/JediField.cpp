@@ -44,8 +44,9 @@ void JediField::Tile::Probed()
 	}
 }
 
-void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gfx) const
+void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Characters::characterOptions COptions, Graphics& gfx) const
 {
+	
 	if (stage != JediField::State::IsDetected)
 	{
 		switch (state)
@@ -57,9 +58,11 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 			if (!hasjedi)
 			{
 				SpriteCodex::DrawTileNumber(pos, DroidSensorNumber, gfx);
+				
 			}
 			else {
-				Characters::DrawR2d2(pos, gfx);
+				//Characters::DrawR2d2(pos, gfx);
+				jedichar.DrawCharacters(pos, gfx, COptions);
 				
 			}
 			break;
@@ -75,10 +78,12 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 		case State::HIDDEN:
 			if (hasjedi)
 			{
-				Characters::DrawR2d2(pos, gfx);
+				//Characters::DrawR2d2(pos, gfx);
+				jedichar.DrawCharacters(pos, gfx, COptions);
 			}
 			else {
 				Characters::DrawTileTerminalButton(pos, gfx);
+
 			}
 			break;
 		case State::REVEALED:
@@ -100,13 +105,19 @@ void JediField::Tile::Draw(const Vei2& pos, JediField::State stage, Graphics& gf
 
 			}
 			else {
-				Characters::DrawR2d2(pos, gfx);
-				SpriteCodex::DrawTileCross(pos, gfx);
+				//Characters::DrawR2d2(pos, gfx);
+				//SpriteCodex::DrawTileCross(pos, gfx);
+				jedichar.DrawCharactersAlert(pos, gfx, COptions);
 			}
 			break;
 		}
 
 	}
+}
+
+bool JediField::Tile::NotDroidLookingFor() const
+{
+	return DroidSensorNumber == 0;
 }
 
 void JediField::Tile::DroidScanresults(int scancount)
@@ -140,7 +151,7 @@ JediField::JediField(const Vei2 center,int nJedi)
 			spawnPos = Vei2(xdist(rng), ydist(rng));
 		} while (TileAt(spawnPos).HasJedi());
 		TileAt(spawnPos).SpawnJedi();
-		TileAt(spawnPos).Reveal();
+		
 	}
 	
 	for (Vei2 gridPos = { 0,0 }; gridPos.y < height; gridPos.y++)
@@ -210,20 +221,14 @@ void JediField::OnRevealClick(const Vei2& screenPos)
 		const Vei2 gridPos = ScreenToGrid(screenPos);
 		assert(gridPos.x >= 0 && gridPos.x < width && gridPos.y >= 0 &&
 			gridPos.y < height);
+		Reveallocation(gridPos);
 		Tile& tile = TileAt(gridPos);
-		if (!tile.isRevealed() && !tile.hasProbe())
-		{
-			tile.Reveal();
-			if (tile.HasJedi())
-			{
-				jstate = State::IsDetected;
-
-			}
-			else if (JediFound())
+		
+			 if (JediFound())
 			{
 				jstate = State::Winner;
 			}
-		}
+		
 	}
 	
 }
@@ -241,6 +246,11 @@ void JediField::OnProbeClick(const Vei2& screenPos)
 			tile.Probed();
 		}
 	}
+}
+
+void JediField::reset()
+{
+
 }
 
 JediField::State JediField::GetState() const
@@ -283,6 +293,36 @@ bool JediField::JediFound() const
 	return true;
 }
 
+void JediField::Reveallocation(const Vei2& gridpos)
+{
+	Tile& tile = TileAt(gridpos);
+	if (!tile.isRevealed() && !tile.hasProbe())
+	{
+		tile.Reveal();
+		if (tile.HasJedi())
+		{
+			jstate = State::IsDetected;
+
+		}
+		else if (tile.NotDroidLookingFor())
+		{
+			const int xStart = std::max(0, gridpos.x - 1);
+			const int yStart = std::max(0, gridpos.y - 1);
+			const int xEnd = std::min(width - 1, gridpos.x + 1);
+			const int yEnd = std::min(height - 1, gridpos.y + 1);
+
+			
+			for (Vei2 gridPos = { xStart,yStart }; gridPos.y <= yEnd; gridPos.y++)
+			{
+				for (gridPos.x = xStart; gridPos.x <= xEnd; gridPos.x++)
+				{
+					Reveallocation(gridPos);
+				}
+			}
+		}
+	}
+}
+
 JediField::Tile& JediField::TileAt(const Vei2& gridpos)
 {
 	return Jfield[gridpos.y * width + gridpos.x];
@@ -307,7 +347,7 @@ void JediField::Draw(Graphics& gfx) const
 		for (gridPos.x = 0; gridPos.x < width; ++gridPos.x)
 		{
 			
-			TileAt(gridPos).Draw(topLeft + gridPos * SpriteCodex::artsize,jstate, gfx);
+			TileAt(gridPos).Draw(topLeft + gridPos * SpriteCodex::artsize,jstate, CharacterOpt, gfx);
 		}
 	}
 }

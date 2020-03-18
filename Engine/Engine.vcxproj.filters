@@ -84,9 +84,6 @@
     <ClInclude Include="ShipArt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuSelector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EndingArt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShipArt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EndingArt.cpp">

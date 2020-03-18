@@ -19,6 +19,7 @@ void Background::Themenu(Graphics& gfx)
 	
 	menu.Projection(140, 120, gfx);
 	menu.SaberColorChange();
+	menu.ProjectionColorChange();
 }
 
 void Background::JediTemple(Graphics& gfx)

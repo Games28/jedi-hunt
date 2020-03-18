@@ -25,7 +25,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-    jfield(gfx.GetRect().GetCenter(),4)
+    jfield(gfx.GetRect().GetCenter(),5),
+    testmenu(Vei2{ 200, 158 })
 {
 }
 
@@ -40,24 +41,29 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-    switch (gstate)
+    while (!wnd.mouse.IsEmpty())
     {
-    case GameState::MENU:
-    {
-        back.MenuSelect(wnd.kbd);
-        jfield.keySelection(wnd.kbd);
-       // menu.ButtonSelect( wnd.kbd);
-        if (wnd.kbd.KeyIsPressed(VK_RETURN))
+        const auto e = wnd.mouse.Read();
+        switch (gstate)
         {
-            gstate = GameState::GAMEPLAY;
+        case GameState::MENU:
+        {
+
+            testmenu.ProcessMouse(e);
+
+
+            //back.MenuSelect(wnd.kbd);
+            //jfield.keySelection(wnd.kbd);
+           // menu.ButtonSelect( wnd.kbd);
+            if (wnd.kbd.KeyIsPressed(VK_RETURN))
+            {
+                gstate = GameState::GAMEPLAY;
+            }
+            break;
         }
-        break;
-    }
-    case GameState::GAMEPLAY:
-    {
-        while (!wnd.mouse.IsEmpty())
+        case GameState::GAMEPLAY:
         {
-            const auto e = wnd.mouse.Read();
+
             if (jfield.GetState() == JediField::State::Probing)
             {
                 if (e.GetType() == Mouse::Event::Type::LPress)
@@ -77,25 +83,25 @@ void Game::UpdateModel()
                     }
                 }
             }
+
+            if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
+            {
+                gstate = GameState::END;
+            }
+
+            break;
         }
-        if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
+        case GameState::END:
         {
-            gstate = GameState::END;
+            if (wnd.kbd.KeyIsPressed(VK_BACK))
+            {
+                gstate = GameState::MENU;
+            }
+            break;
         }
-        
-        break;
-    }
-    case GameState::END:
-    {
-        if (wnd.kbd.KeyIsPressed(VK_BACK))
-        {
-            gstate = GameState::MENU;
         }
-        break;
+
     }
-    }
-    
-   
     
 }
 
@@ -105,10 +111,11 @@ void Game::ComposeFrame()
     {
     case GameState::MENU:
     {
-        back.Themenu(gfx);
-        back.SaberDraw(gfx);
-        jfield.DrawSaber(gfx);
+        //back.Themenu(gfx);
+        //back.SaberDraw(gfx);
+        //jfield.DrawSaber(gfx);
         //menu.Draw(gfx);
+        testmenu.Draw(gfx);
 
 
         break;
