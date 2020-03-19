@@ -30,7 +30,7 @@ public:
 	
 public:
 	
-	///void ButtonSelect( Keyboard& kbd);//iskeypress function
+	//void ButtonSelect( Keyboard& kbd);//iskeypress function
 	void Draw(Graphics& gfx);// draw base on iskeypress
 	static constexpr Color C = Colors::Gray;
 

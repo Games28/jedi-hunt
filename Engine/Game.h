@@ -54,7 +54,7 @@ private:
     Background back;
     JediField jfield;
     TheMenu menu;
-    MenuOptions testmenu;
+    //MenuOptions testmenu;
     GameState gstate = GameState::MENU;
 	/********************************/
 	/*  User Variables              */

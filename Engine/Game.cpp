@@ -25,8 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-    jfield(gfx.GetRect().GetCenter(),5),
-    testmenu(Vei2{ 200, 158 })
+    jfield(gfx.GetRect().GetCenter(),5)
 {
 }
 
@@ -49,12 +48,12 @@ void Game::UpdateModel()
         case GameState::MENU:
         {
 
-            testmenu.ProcessMouse(e);
+            //testmenu.ProcessMouse(e);
 
 
-            //back.MenuSelect(wnd.kbd);
-            //jfield.keySelection(wnd.kbd);
-           // menu.ButtonSelect( wnd.kbd);
+            back.MenuSelect(wnd.kbd);
+            jfield.keySelection(wnd.kbd);
+           //menu.ButtonSelect( wnd.kbd);
             if (wnd.kbd.KeyIsPressed(VK_RETURN))
             {
                 gstate = GameState::GAMEPLAY;
@@ -111,11 +110,11 @@ void Game::ComposeFrame()
     {
     case GameState::MENU:
     {
-        //back.Themenu(gfx);
-        //back.SaberDraw(gfx);
-        //jfield.DrawSaber(gfx);
+        back.Themenu(gfx);
+        back.SaberDraw(gfx);
+        jfield.DrawSaber(gfx);
         //menu.Draw(gfx);
-        testmenu.Draw(gfx);
+        //testmenu.Draw(gfx);
 
 
         break;
