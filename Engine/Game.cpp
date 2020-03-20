@@ -40,9 +40,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-    while (!wnd.mouse.IsEmpty())
-    {
-        const auto e = wnd.mouse.Read();
+    
+        
         switch (gstate)
         {
         case GameState::MENU:
@@ -62,32 +61,34 @@ void Game::UpdateModel()
         }
         case GameState::GAMEPLAY:
         {
-
-            if (jfield.GetState() == JediField::State::Probing)
+            while (!wnd.mouse.IsEmpty())
             {
-                if (e.GetType() == Mouse::Event::Type::LPress)
+                const auto e = wnd.mouse.Read();
+                if (jfield.GetState() == JediField::State::Probing)
                 {
-                    const Vei2 mousePos = wnd.mouse.GetPos();
-                    if (jfield.GetRect().Contains(mousePos))
+                    if (e.GetType() == Mouse::Event::Type::LPress)
                     {
-                        jfield.OnRevealClick(mousePos);
+                        const Vei2 mousePos = wnd.mouse.GetPos();
+                        if (jfield.GetRect().Contains(mousePos))
+                        {
+                            jfield.OnRevealClick(mousePos);
+                        }
+                    }
+                    else if (e.GetType() == Mouse::Event::Type::RPress)
+                    {
+                        const Vei2 mousePos = wnd.mouse.GetPos();
+                        if (jfield.GetRect().Contains(mousePos))
+                        {
+                            jfield.OnProbeClick(mousePos);
+                        }
                     }
                 }
-                else if (e.GetType() == Mouse::Event::Type::RPress)
+
+                if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
                 {
-                    const Vei2 mousePos = wnd.mouse.GetPos();
-                    if (jfield.GetRect().Contains(mousePos))
-                    {
-                        jfield.OnProbeClick(mousePos);
-                    }
+                    gstate = GameState::END;
                 }
             }
-
-            if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
-            {
-                gstate = GameState::END;
-            }
-
             break;
         }
         case GameState::END:
@@ -100,7 +101,7 @@ void Game::UpdateModel()
         }
         }
 
-    }
+    
     
 }
 

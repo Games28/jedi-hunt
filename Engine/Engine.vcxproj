@@ -144,6 +144,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CoruscantArt.h" />
     <ClInclude Include="DagobahArt.h" />
+    <ClInclude Include="Difficulty.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="EndingArt.h" />
     <ClInclude Include="Game.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="CoruscantArt.cpp" />
     <ClCompile Include="DagobahArt.cpp" />
+    <ClCompile Include="Difficulty.cpp" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="EndingArt.cpp" />
     <ClCompile Include="Game.cpp" />
