@@ -28,6 +28,8 @@
 #include "TheMenu.h"
 #include "Vei2.h"
 #include "MenuOptions.h"
+#include <assert.h>
+#include "Difficulty.h"
 class Game
 {
 public:
@@ -45,6 +47,9 @@ public:
 private:
 	void ComposeFrame();
 	void UpdateModel();
+    void CreateField(int width, int height, int nJedi);
+    void DestroyField();
+    void TheDifficulty();
 	/********************************/
 	/*  User Functions              */
 	/********************************/
@@ -52,9 +57,9 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
     Background back;
-    JediField jfield;
+    JediField* jfield = nullptr;
     TheMenu menu;
-    //MenuOptions testmenu;
+    Difficulty diff;
     GameState gstate = GameState::MENU;
 	/********************************/
 	/*  User Variables              */

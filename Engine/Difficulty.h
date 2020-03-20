@@ -5,7 +5,7 @@
 
 class Difficulty
 {
-private:
+public:
 	enum class Setting
 	{
 		EASY,
@@ -17,9 +17,15 @@ private:
 public:
 	Difficulty() = default;
 	void PurpleSaber(const Vei2& pos, Graphics& gfx);
-	void settingselection(Keyboard& kbd);
+	void selection(Keyboard& kbd);
+	void TheSetting();
+	Vei2 widthandheight();
+	int Amount();
+	void Draw(Graphics& gfx);
+	Setting& getSetting();
 private:
 	Setting settings = Setting::DEFUALT;
-
+	Vei2 WH;
+	int amount;
 };
 

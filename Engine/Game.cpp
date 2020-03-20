@@ -24,8 +24,7 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd ),
-    jfield(gfx.GetRect().GetCenter(),5)
+	gfx( wnd )
 {
 }
 
@@ -46,13 +45,11 @@ void Game::UpdateModel()
         {
         case GameState::MENU:
         {
-
-            //testmenu.ProcessMouse(e);
-
-
+            diff.selection(wnd.kbd);
             back.MenuSelect(wnd.kbd);
-            jfield.keySelection(wnd.kbd);
-           //menu.ButtonSelect( wnd.kbd);
+            jfield->keySelection(wnd.kbd);
+          
+            TheDifficulty();
             if (wnd.kbd.KeyIsPressed(VK_RETURN))
             {
                 gstate = GameState::GAMEPLAY;
@@ -64,29 +61,30 @@ void Game::UpdateModel()
             while (!wnd.mouse.IsEmpty())
             {
                 const auto e = wnd.mouse.Read();
-                if (jfield.GetState() == JediField::State::Probing)
+                if (jfield->GetState() == JediField::State::Probing)
                 {
                     if (e.GetType() == Mouse::Event::Type::LPress)
                     {
                         const Vei2 mousePos = wnd.mouse.GetPos();
-                        if (jfield.GetRect().Contains(mousePos))
+                        if (jfield->GetRect().Contains(mousePos))
                         {
-                            jfield.OnRevealClick(mousePos);
+                            jfield->OnRevealClick(mousePos);
                         }
                     }
                     else if (e.GetType() == Mouse::Event::Type::RPress)
                     {
                         const Vei2 mousePos = wnd.mouse.GetPos();
-                        if (jfield.GetRect().Contains(mousePos))
+                        if (jfield->GetRect().Contains(mousePos))
                         {
-                            jfield.OnProbeClick(mousePos);
+                            jfield->OnProbeClick(mousePos);
                         }
                     }
                 }
 
-                if (jfield.GetState() == JediField::State::Winner || jfield.GetState() == JediField::State::IsDetected)
+                if (jfield->GetState() == JediField::State::Winner || jfield->GetState() == JediField::State::IsDetected)
                 {
                     gstate = GameState::END;
+                    DestroyField();
                 }
             }
             break;
@@ -105,6 +103,43 @@ void Game::UpdateModel()
     
 }
 
+void Game::CreateField(int width, int height, int nJedi)
+{
+    assert(jfield == nullptr);
+    jfield = new JediField(gfx.GetRect().GetCenter(), width, height, nJedi);
+}
+
+void Game::DestroyField()
+{
+    jfield->freeResources();
+    delete jfield;
+    jfield = nullptr;
+}
+
+void Game::TheDifficulty()
+{
+    if (diff.getSetting() == Difficulty::Setting::EASY)
+    {
+        int i = 5;
+        Vei2 pos{ 8,4 };
+        CreateField(pos.x,pos.y, i);
+    }
+    else if (diff.getSetting() == Difficulty::Setting::MEDIUM)
+    {
+        int i = 15;
+        Vei2 pos{ 14,7 };
+        CreateField(pos.x, pos.y, i);
+    }
+    else if (diff.getSetting() == Difficulty::Setting::HARD)
+    {
+        int i = 45;
+        Vei2 pos{ 24,16 };
+        CreateField(pos.x, pos.y, i);
+    }
+
+   
+}
+
 void Game::ComposeFrame()
 {
     switch (gstate)
@@ -113,26 +148,26 @@ void Game::ComposeFrame()
     {
         back.Themenu(gfx);
         back.SaberDraw(gfx);
-        jfield.DrawSaber(gfx);
-        //menu.Draw(gfx);
-        //testmenu.Draw(gfx);
-
+        jfield->DrawSaber(gfx);
+        diff.Draw(gfx);
+        menu.Draw(gfx);
+       
 
         break;
     }
     case GameState::GAMEPLAY:
     {
         back.DrawBackground(gfx);
-        jfield.Draw(gfx);
+        jfield->Draw(gfx);
         break;
     }
     case GameState::END:
     {
-        if (jfield.GetState() == JediField::State::Winner)
+        if (jfield->GetState() == JediField::State::Winner)
         {
             back.EndWon(gfx);
         }
-        if (jfield.GetState() == JediField::State::IsDetected)
+        if (jfield->GetState() == JediField::State::IsDetected)
         {
             back.EndFailure(gfx);
         }

@@ -48,12 +48,13 @@ private:
 public:
 	void Draw(Graphics& gfx) const;
 	RectI GetRect() const;
-	JediField(const Vei2 center, int nJedi);
+	JediField(const Vei2 center, int width, int height, int nJedi);
 	void keySelection(Keyboard& kbd);
 	void DrawSaber(Graphics& gfx);
 	void OnRevealClick(const Vei2& screenPos);
 	void OnProbeClick(const Vei2& screenPos);
 	void reset();
+	void freeResources();
 	State GetState() const;
 private:
 	void Reveallocation(const Vei2& gridpos);
@@ -63,16 +64,16 @@ private:
 	int DroidScanCount(const Vei2& gridpos);
 	bool JediFound() const;
 private:
-	bool IsDetected = false; 
-	static constexpr int width = 10;
-	static constexpr int height = 8;
+	//bool IsDetected = false; 
+	 int width = 10;
+	int height = 8;
 	static constexpr int borderThickness = 10;
 	static constexpr Color borderColor = Colors::Blue;
 	Characters::characterOptions CharacterOpt = Characters::characterOptions::DEFAULT;
 	Characters character;
 	Vei2 topLeft;
 	State jstate = State::Probing;
-	Tile Jfield[width * height];
+	Tile* Jfield = nullptr;
 	
 };
 

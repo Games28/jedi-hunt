@@ -131,8 +131,11 @@ RectI JediField::GetRect() const
 	return RectI(topLeft, width *SpriteCodex::artsize, height * SpriteCodex::artsize);
 }
 
-JediField::JediField(const Vei2 center,int nJedi)
+JediField::JediField(const Vei2 center, int width, int height,int nJedi)
 	:
+	width(width),
+	height(height),
+	Jfield(new Tile[width * height]),
 	topLeft(center - Vei2(width * SpriteCodex::artsize, height * SpriteCodex::artsize) / 2)
 {
 	assert(nJedi > 0 && nJedi < width * height);
@@ -253,6 +256,12 @@ void JediField::reset()
 
 }
 
+void JediField::freeResources()
+{
+	delete[] Jfield;
+	Jfield = nullptr;
+}
+
 JediField::State JediField::GetState() const
 {
 	return jstate;
@@ -282,8 +291,9 @@ int JediField::DroidScanCount(const Vei2& gridpos)
 
 bool JediField::JediFound() const
 {
-	for (const Tile& j : Jfield)
+	for (int i = 0 ; i < width * height; i++)
 	{
+		const Tile& j = Jfield[i];
 		if ((j.HasJedi() && !j.hasProbe()) ||
 			(!j.HasJedi() && !j.isRevealed()))
 		{

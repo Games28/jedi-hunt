@@ -346,22 +346,64 @@ void Difficulty::PurpleSaber(const Vei2& pos, Graphics& gfx)
 	gfx.PutPixel(pos.x + 100, pos.y + 9, 163, 73, 164);
 }
 
-void Difficulty::settingselection(Keyboard& kbd)
+void Difficulty::selection(Keyboard& kbd)
 {
 	if (kbd.KeyIsPressed('D'))
 	{
 		if (kbd.KeyIsPressed('1'))
 		{
 			settings = Setting::EASY;
+			WH = Vei2{ 8,4 };
+			amount = 5;
 		}
 		else if (kbd.KeyIsPressed('2'))
 		{
 			settings = Setting::MEDIUM;
+			WH = Vei2{ 14,7 };
+			amount = 15;
 		}
 		else if (kbd.KeyIsPressed('3'))
 		{
 			settings = Setting::HARD;
+			WH = Vei2{ 24,16 };
+			amount = 45;
 		}
 		
 	}
+}
+
+void Difficulty::TheSetting()
+{
+	
+}
+
+Vei2 Difficulty::widthandheight()
+{
+	return WH;
+}
+
+int Difficulty::Amount()
+{
+	return amount;
+}
+
+void Difficulty::Draw(Graphics& gfx)
+{
+	if (settings == Setting::EASY)
+	{
+		PurpleSaber(Vei2{ 400, 185 }, gfx);
+	}
+	else if (settings == Setting::MEDIUM)
+	{
+		PurpleSaber(Vei2{ 400, 220 }, gfx);
+	}
+	else if (settings == Setting::HARD)
+	{
+		PurpleSaber(Vei2{ 400, 255 },gfx);
+	}
+}
+
+Difficulty::Setting& Difficulty::getSetting()
+{
+	return settings;
 }
