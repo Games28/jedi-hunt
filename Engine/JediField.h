@@ -40,7 +40,7 @@ private:
 		
 	private:
 		State state = State::HIDDEN;
-		Characters::characterOptions CharOpts = Characters::characterOptions::DEFAULT;
+		//Characters::characterOptions CharOpts = Characters::characterOptions::DEFAULT;
 		Characters jedichar;
 		bool hasjedi = false;
 		int DroidSensorNumber = -1;
@@ -65,8 +65,8 @@ private:
 	bool JediFound() const;
 private:
 	//bool IsDetected = false; 
-	 int width = 10;
-	int height = 8;
+	 int width;
+	int height;
 	static constexpr int borderThickness = 10;
 	static constexpr Color borderColor = Colors::Blue;
 	Characters::characterOptions CharacterOpt = Characters::characterOptions::DEFAULT;

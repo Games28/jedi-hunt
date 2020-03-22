@@ -45,11 +45,12 @@ void Game::UpdateModel()
         {
         case GameState::MENU:
         {
-            diff.selection(wnd.kbd);
+           diff.selection(wnd.kbd);
             back.MenuSelect(wnd.kbd);
-            jfield->keySelection(wnd.kbd);
-          
+            //jfield->keySelection(wnd.kbd);
             TheDifficulty();
+            
+            
             if (wnd.kbd.KeyIsPressed(VK_RETURN))
             {
                 gstate = GameState::GAMEPLAY;
@@ -58,11 +59,14 @@ void Game::UpdateModel()
         }
         case GameState::GAMEPLAY:
         {
+            
+            CreateField(size.x, size.y, nJedi);
             while (!wnd.mouse.IsEmpty())
             {
                 const auto e = wnd.mouse.Read();
                 if (jfield->GetState() == JediField::State::Probing)
                 {
+                   
                     if (e.GetType() == Mouse::Event::Type::LPress)
                     {
                         const Vei2 mousePos = wnd.mouse.GetPos();
@@ -118,25 +122,25 @@ void Game::DestroyField()
 
 void Game::TheDifficulty()
 {
-    if (diff.getSetting() == Difficulty::Setting::EASY)
+   
+    if (diff.settings == Difficulty::Setting::EASY)
     {
-        int i = 5;
-        Vei2 pos{ 8,4 };
-        CreateField(pos.x,pos.y, i);
-    }
-    else if (diff.getSetting() == Difficulty::Setting::MEDIUM)
-    {
-        int i = 15;
-        Vei2 pos{ 14,7 };
-        CreateField(pos.x, pos.y, i);
-    }
-    else if (diff.getSetting() == Difficulty::Setting::HARD)
-    {
-        int i = 45;
-        Vei2 pos{ 24,16 };
-        CreateField(pos.x, pos.y, i);
-    }
+        nJedi = 5;
+        size = Vei2{ 8,4 };
 
+    }
+    else if (diff.settings == Difficulty::Setting::MEDIUM)
+    {
+        nJedi = 15;
+        size = Vei2{ 14,7 };
+
+    }
+    else if (diff.settings == Difficulty::Setting::HARD)
+    {
+        nJedi = 45;
+        size = Vei2{ 24,16 };
+
+    }
    
 }
 
@@ -148,9 +152,9 @@ void Game::ComposeFrame()
     {
         back.Themenu(gfx);
         back.SaberDraw(gfx);
-        jfield->DrawSaber(gfx);
+        //jfield->DrawSaber(gfx);
         diff.Draw(gfx);
-        menu.Draw(gfx);
+        //menu.Draw(gfx);
        
 
         break;

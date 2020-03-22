@@ -189,6 +189,7 @@ void JediField::keySelection(Keyboard& kbd)
 		{
 			CharacterOpt = Characters::characterOptions::R2D2;
 		}
+		
 	}
 }
 
@@ -212,6 +213,7 @@ void JediField::DrawSaber(Graphics& gfx)
 		{
 			character.BlueSaber(Vei2(200, 295), gfx);
 		}
+		
 	
 
 }

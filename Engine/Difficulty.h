@@ -23,8 +23,9 @@ public:
 	int Amount();
 	void Draw(Graphics& gfx);
 	Setting& getSetting();
-private:
 	Setting settings = Setting::DEFUALT;
+private:
+	
 	Vei2 WH;
 	int amount;
 };

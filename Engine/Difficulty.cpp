@@ -353,20 +353,17 @@ void Difficulty::selection(Keyboard& kbd)
 		if (kbd.KeyIsPressed('1'))
 		{
 			settings = Setting::EASY;
-			WH = Vei2{ 8,4 };
-			amount = 5;
+			
 		}
 		else if (kbd.KeyIsPressed('2'))
 		{
 			settings = Setting::MEDIUM;
-			WH = Vei2{ 14,7 };
-			amount = 15;
+			
 		}
 		else if (kbd.KeyIsPressed('3'))
 		{
 			settings = Setting::HARD;
-			WH = Vei2{ 24,16 };
-			amount = 45;
+			
 		}
 		
 	}

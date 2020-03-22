@@ -61,6 +61,8 @@ private:
     TheMenu menu;
     Difficulty diff;
     GameState gstate = GameState::MENU;
+    int nJedi;
+    Vei2 size;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
